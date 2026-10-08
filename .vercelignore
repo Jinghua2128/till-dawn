@@ -1,0 +1,10 @@
+docs/
+tests/
+.github/
+AGENTS.md
+README.md
+playwright.config.ts
+.env*
+!.env.example
+
+*.tsbuildinfo
