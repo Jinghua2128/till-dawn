@@ -29,7 +29,7 @@ npm run test:e2e
 
 The browser suite starts the production build on port 3100. Its 12 cases cover desktop Chromium (1440×1000), mobile WebKit (390×664 viewport with iPhone 13 emulation), and 320px narrow-layout checks. It exercises navigation, conditional preferences, cancel/apply focus, message entry and deletion, refresh clearing, and loading/error recovery, with axe accessibility checks. Screenshots/traces on failure are saved in the OS temporary directory, outside the repository.
 
-GitHub Actions runs lint, strict type checking, a production build, and the same browser suite for main pushes and pull requests. Dependencies and Actions releases are pinned.
+GitHub Actions runs lint, strict type checking, a production build, and the same browser suite for main pushes and pull requests. Dependencies and Actions releases are pinned. [Implementation CI run 37880036070](https://github.com/Jinghua2128/till-dawn/actions/runs/37880036070) passed for commit `6d8012e`.
 
 Validated locally: lint, type check, production build, and all 12 browser tests pass. `npm audit --omit=dev` reports no known runtime dependency advisories. The development-only ESLint/shadcn dependency chain still reports the braces nested-pattern advisory (no patched braces version was available at verification); do not run these tools over untrusted projects.
 
@@ -39,9 +39,15 @@ Private repository: https://github.com/Jinghua2128/till-dawn
 
 Vercel project: https://vercel.com/longmai2128s-projects/till-dawn
 
-The workspace is linked to this project. It uses Next.js, Node 24, `npm ci`, and Singapore (`sin1`) for server functions. Vercel Authentication protects preview deployments. The site also sends `noindex, nofollow`; this does not replace access protection. Deploy explicitly to preview with `vercel deploy --target preview` after checks pass. The beta has not been launched publicly.
+The workspace is linked to this project. It uses Next.js, Node 24, `npm ci`, and Singapore (`sin1`) for server functions. Vercel Authentication protects **all deployments**, including production URLs, as explicitly approved by the owner. The site also sends `noindex, nofollow`; this does not replace access protection.
 
-Environment files, Vercel credentials, generated builds and dependencies are excluded from Git. `.vercelignore` additionally excludes planning documents and tests from CLI uploads. Git integration and CI deployment status should be checked in the project dashboard before relying on automatic deployments.
+[Protected UI review deployment](https://till-dawn-8t1bc52zx-longmai2128s-projects.vercel.app): Vercel promoted the first upload to production even though the CLI requested preview. This deployment is Ready, and authenticated checks of `/` and `/consultation` returned HTTP 200 with the expected app content. Signed-out requests redirect to Vercel sign-in. It is a UI prototype, not a launched beta.
+
+The separate preview deployment `dpl_71ofeJW1s4M8RoTpTcySH3UTxZSv` is **Blocked** because Vercel cannot authorize the Git commit author. The next step is to link GitHub account `Jinghua2128` to the existing project owner's Vercel account in [Authentication settings](https://vercel.com/account/authentication), following [Vercel's collaboration guidance](https://vercel.com/docs/deployments/troubleshoot-project-collaboration), then retry `vercel deploy --target preview --scope longmai2128s-projects`. Verify the returned target and Ready state before treating it as staging.
+
+Environment files, Vercel credentials, generated builds and dependencies are excluded from Git. `.vercelignore` additionally excludes planning/handoff documents and tests from CLI uploads. Git integration is not connected; GitHub CI passes independently, but automatic Vercel deployment is not configured.
+
+The requested agent setup installed Vercel CLI 63.1.0, the official user-scoped Vercel plugin, and the shared MCP endpoint with user-completed OAuth. CLI project access works. The currently exposed MCP project tools still return a scope authorization error; the separate Vercel app connection was offered but is not confirmed. MCP project access remains unverified.
 
 ## Design implementation
 
@@ -63,7 +69,7 @@ The landing layout preserves the approved serif typography, cream/rose palette, 
 
 Visual review: [landing overview](docs/concepts/landing-overview-v1.png) and [consultation with saved-history controls](docs/concepts/consultation-v2.png). Generated with built-in ImageGen; [prompts and provenance](docs/concepts/README.md) are included. The implementation follows these concepts with responsive adjustments and explicit preview notices.
 
-[Planning review record](docs/10-planning-review.md) documents the checks performed and the application tests that have not yet been run.
+[Planning review record](docs/10-planning-review.md) preserves checks from the planning stage. [HANDOFF.md](HANDOFF.md) records current implementation verification, deployment state and the exact resume action; [PROJECT_MAP.md](PROJECT_MAP.md) maps the code and assets.
 
 ## Planning baseline
 

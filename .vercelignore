@@ -2,6 +2,10 @@ docs/
 tests/
 .github/
 AGENTS.md
+HANDOFF.md
+PROJECT_MAP.md
+DECISIONS.md
+FAILURE_LOG.md
 README.md
 playwright.config.ts
 .env*
