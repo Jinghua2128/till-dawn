@@ -29,7 +29,7 @@ npm run test:e2e
 
 The browser suite starts the production build on port 3100. Its 12 cases cover desktop Chromium (1440×1000), mobile WebKit (390×664 viewport with iPhone 13 emulation), and 320px narrow-layout checks. It exercises navigation, conditional preferences, cancel/apply focus, message entry and deletion, refresh clearing, and loading/error recovery, with axe accessibility checks. Screenshots/traces on failure are saved in the OS temporary directory, outside the repository.
 
-GitHub Actions runs lint, strict type checking, a production build, and the same browser suite for main pushes and pull requests. Dependencies and Actions releases are pinned. [Implementation CI run 37880036070](https://github.com/Jinghua2128/till-dawn/actions/runs/37880036070) passed for commit `6d8012e`.
+GitHub Actions runs lint, strict type checking, a production build, and the same browser suite for main pushes and pull requests. Dependencies and Actions releases are pinned. [Implementation CI run 37880036070](https://github.com/Jinghua2128/till-dawn/actions/runs/37880036070) passed for commit `6d8012e`; [documentation checkpoint run 37887891373](https://github.com/Jinghua2128/till-dawn/actions/runs/37887891373) also passed for `f8d80a6`.
 
 Validated locally: lint, type check, production build, and all 12 browser tests pass. `npm audit --omit=dev` reports no known runtime dependency advisories. The development-only ESLint/shadcn dependency chain still reports the braces nested-pattern advisory (no patched braces version was available at verification); do not run these tools over untrusted projects.
 
@@ -47,9 +47,12 @@ The separate preview deployment `dpl_71ofeJW1s4M8RoTpTcySH3UTxZSv` is **Blocked*
 
 Environment files, Vercel credentials, generated builds and dependencies are excluded from Git. `.vercelignore` additionally excludes planning/handoff documents and tests from CLI uploads. Git integration is not connected; GitHub CI passes independently, but automatic Vercel deployment is not configured.
 
-The requested agent setup installed Vercel CLI 63.1.0, the official user-scoped Vercel plugin, and the shared MCP endpoint with user-completed OAuth. CLI project access works. The currently exposed MCP project tools still return a scope authorization error; the separate Vercel app connection was offered but is not confirmed. MCP project access remains unverified.
+The requested agent setup installed Vercel CLI 63.1.0, the official user-scoped Vercel plugin, and the shared MCP endpoint with user-completed OAuth. CLI project access works. The currently exposed MCP project tools still return a scope authorization error; the user subsequently installed the Vercel app/plugin, but fresh project/user reads still returned 403/404. MCP project access remains unresolved; the CLI continues to work.
 
 ## Design implementation
+
+The 10 October liquid-glass refinement adds translucent, blurred surfaces, reflective edges, soft shadows and glossy controls to the existing navigation, consultation and dialogs. Shared tokens live in `src/app/globals.css`; it includes opaque fallbacks, reduced-transparency/forced-colors handling and reduced-motion support. The mobile sticky composer keeps an opaque backing so text cannot show through its controls. No new dependency, copy, artwork or workflow was introduced.
+
 
 The landing layout preserves the approved serif typography, cream/rose palette, architectural hero, category diptych and editorial spacing. The responsive mobile layout separates artwork from controls. The consultation keeps the preference sidebar, chat and recommendation region; on mobile, preferences open in an accessible dialog. The backdrop and save banner reuse the original hero artwork. Explicit preview notices replace the concept’s implied live assistant and account saving. Original assets and prompts are in [the provenance record](docs/concepts/production-assets.md).
 

@@ -54,8 +54,16 @@ Only record meaningful failures and repeatable lessons. Do not treat a guess as 
 ## OPS-M1-006 — Vercel MCP lacks project scope (open)
 - Shared endpoint OAuth completed, but MCP list_teams returned an empty list, get_auth_user returned 404 and explicit project/team read returned 403. CLI project reads/writes succeed for the same IDs.
 - Confirmed symptom: MCP credentials lack usable access to this team. Exact authorization-service cause is unconfirmed. Documentation search works. Use CLI for authorized project work and report the MCP limitation separately.
-- The official plugin also declares a separate Vercel connected app, found uninstalled. Connection was offered; no user confirmation received. This may explain the exposed app tools' missing authorization, but it is not a verified root cause. A later project read still returned 403; stop unchanged retries.
+- The official plugin declares a separate Vercel connected app, initially found uninstalled. The user subsequently installed it; a fresh project read still returned 403 and get_auth_user returned 404. The missing-plugin hypothesis alone was insufficient. CLI reads still work; service authorization remains unresolved. Do not repeat unchanged MCP or deployment attempts.
 
 ## OPS-M1-007 — Preview commit author permission (blocked)
 - CLI inspect of dpl_71ofeJW1s4M8RoTpTcySH3UTxZSv confirms target preview and Blocked: commit author lacks permission to create deployments for this project.
 - The commit uses verified GitHub no-reply author Jinghua2128. Vercel CLI account is separately authenticated. Required next step: normal Git account/team authorization. Do not fake authorship, strip Git metadata, or use another upload route to evade the access check.
+
+## UI-GLASS-20261010 — Keep sticky input text readable (verified visually after fix)
+- Initial glass pass used the translucent modal fill for the mobile sticky composer. Full-page review showed recommendation text faintly showing through the control area.
+- Keep the mobile sticky backing opaque while retaining the glass input surface. Check its 390px screenshot after the change; do not lower all text opacity to create translucency.
+
+## UI-SCROLL-20261010 — Next.js smooth route-scroll warning (verified fixed)
+- Browser navigation warned that global smooth scrolling lacked `data-scroll-behavior="smooth"` on the HTML element. The installed Next 16 upgrade guide documents this opt-in for instant route transitions.
+- Added the attribute in `src/app/layout.tsx`; repeated landing → consultation navigation produced no new console warnings/errors.

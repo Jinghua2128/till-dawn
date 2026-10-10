@@ -32,3 +32,9 @@ Record future substantive decisions with date, status, reason, consequences and 
 
 - Explicit user approval: “Protect all deployments,” after being informed that Vercel promoted the first requested preview to production.
 - Applied `ssoProtection.deploymentType = all`; signed-out checks returned 302 for both production aliases and the immutable URL. Keep protection enabled until the user authorizes public launch.
+
+## DEC-GLASS-20261010 — Liquid-glass surface treatment
+
+- User requested a liquid-glass effect. Apply it to existing navigation, controls, consultation surfaces and dialogs while preserving the cream/rose palette, original artwork, typography, visible copy and page flows.
+- Implement shared CSS blur, translucency, specular edges and restrained hover feedback. Keep opaque fallbacks, reduced-transparency support, reduced motion and keyboard focus; no new runtime dependency.
+- User reports the requested Vercel account step complete; verify staging normally while retaining all-deployment protection.

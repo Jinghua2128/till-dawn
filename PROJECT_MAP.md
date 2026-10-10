@@ -1,6 +1,6 @@
 # PROJECT_MAP — Till Dawn
 
-Updated from implementation and deployment checks: 2026-10-09. Original workflow inventory: 11:30 SGT. Root: `/Users/longmai2128/Documents/Till Dawn`.
+Updated from implementation and deployment checks: 2026-10-10. Original workflow inventory: 11:30 SGT. Root: `/Users/longmai2128/Documents/Till Dawn`.
 
 ## Identity and entry points
 
@@ -51,7 +51,7 @@ Updated from implementation and deployment checks: 2026-10-09. Original workflow
 
 ## Implementation map — inspected during Milestone 1
 
-- `src/app/layout.tsx`: metadata, local fonts, skip link, Motion provider. `globals.css`: shared palette, typography, responsive landing and consultation layouts.
+- `src/app/layout.tsx`: metadata, local fonts, skip link, Motion provider. `globals.css`: shared palette, typography, responsive layouts and liquid-glass tokens/surfaces with accessibility fallbacks.
 - `src/app/page.tsx`: landing, links and three original images from `public/images/`. `src/app/consultation/page.tsx`: query validation and consultation shell.
 - `src/features/consultation/`: page-memory client, conditional preferences, display labels and honest recommendation states.
 - `src/app/products/page.tsx`: category navigation/empty catalogue. `sign-in/`, `account/history/`: unavailable-feature pages. `[info]/`: privacy/terms/disclosure/contact allowlist. `error.tsx`, `not-found.tsx`: recovery destinations.
