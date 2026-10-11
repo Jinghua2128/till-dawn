@@ -261,8 +261,11 @@
   background: var(--glass-sheen), var(--glass-modal);
   border: 1px solid var(--glass-edge);
   box-shadow: var(--glass-shadow), 0 28px 90px -24px rgb(55 28 27 / 35%);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
+}
+/* The overlay already blurs the scene; avoid filtering every nested control. */
+:is(.consultation-frame, [data-slot="dialog-content"], [data-slot="alert-dialog-content"], [data-slot="sheet-content"]) :is([data-slot="button"], [data-slot="toggle-group-item"]) {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 [data-slot="dialog-content"], [data-slot="alert-dialog-content"] { border-radius: 26px; }
 [data-slot="dialog-footer"] { background: var(--glass-fill); border-radius: 0 0 26px 26px; border-color: var(--glass-edge); }
