@@ -64,7 +64,7 @@
     --glass-fill: rgb(255 250 247 / 60%);
     --glass-frame: rgb(248 240 236 / 74%);
     --glass-rose: rgb(237 208 210 / 76%);
-    --glass-modal: rgb(255 250 247 / 88%);
+    --glass-modal: rgb(255 250 247 / 96%);
     --glass-blur: blur(22px) saturate(145%);
   }
 }
@@ -253,7 +253,16 @@
 }
 [data-slot="dialog-content"], [data-slot="alert-dialog-content"] { border-radius: 26px; }
 [data-slot="dialog-footer"] { background: var(--glass-fill); border-radius: 0 0 26px 26px; border-color: var(--glass-edge); }
-[data-slot="dialog-overlay"], [data-slot="alert-dialog-overlay"], [data-slot="sheet-overlay"] { background: rgb(55 28 27 / 20%); }
+/* A modal blocks the scene: use a scrim instead of recompositing backdrop blur. */
+[data-slot="dialog-overlay"], [data-slot="alert-dialog-overlay"], [data-slot="sheet-overlay"] {
+  background: rgb(55 28 27 / 24%);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+body:has(:is([data-slot="dialog-overlay"], [data-slot="alert-dialog-overlay"], [data-slot="sheet-overlay"])) .site-header::before {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
 /* Native continuous corners; rounded rectangles remain the browser fallback. */
 @supports (corner-shape: squircle) {
   .site-header::before, .chat-message, .recommendations-empty, .composer-input,

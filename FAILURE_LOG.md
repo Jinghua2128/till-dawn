@@ -87,3 +87,7 @@ Only record meaningful failures and repeatable lessons. Do not treat a guess as 
 ## OPS-SEC-20261112 — Vulnerable Next.js pin (patched locally)
 - `npm audit --omit=dev` confirmed critical Next.js advisories affecting 16.4.0; the production build also refused once with its security advisory.
 - Updated Next.js and eslint-config-next to 16.4.6 with the lockfile. Lint/typecheck/build and all 12 local browser tests pass; runtime audit reports zero advisories. Remote deployment verification remains pending.
+
+### 12 November modal investigation
+- `43160664727` passed only after one WebKit retry. `43161191184` failed both attempts; retained traces show individual clicks taking 1–7 seconds, and sharp background text visible through the dialog. Failure artifacts now upload even if retries eventually pass.
+- Targeted candidate: use a scrim instead of overlay blur, pause header blur behind an open modal, and increase modal opacity to 96%. All normal glass surfaces and motion remain. Local checks and 12 browser tests pass; Linux verification pending. No timeout/assertion/worker changes.
