@@ -29,15 +29,16 @@ test.beforeEach(async ({ page }) => {
 test("landing navigates to the consultation and loads its original artwork", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveTitle(/Till Dawn/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Beauty,considered.");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Skincare &makeup.");
   await expect(page.locator(".hero-art")).toBeVisible();
   await expect.poll(() => page.locator(".hero-art").evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
   await expectNoOverflow(page);
   await expectAccessible(page);
   await page.getByRole("link", { name: "Start a consultation" }).click();
   await expect(page).toHaveURL(/\/consultation$/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Let’s find");
-  await expect(page.getByText("Early preview.", { exact: false })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Consultation");
+  await expect(page.getByText("Preview only.", { exact: false })).toBeVisible();
+  await expect(page.locator(".preview-controls")).toHaveCount(0);
 });
 
 test("preferences branch, apply, cancel, and omit an inapplicable finish", async ({ page, isMobile }) => {
@@ -113,16 +114,16 @@ test("chat uses page memory, handles multiline text, and confirms clearing", asy
 });
 
 test("loading and error examples recover to an honest empty catalogue", async ({ page }) => {
-  await page.goto("/consultation");
+  await page.goto("/consultation?preview=1");
   await expectAccessible(page);
-  await page.getByText("Explore preview states", { exact: true }).click();
+  await page.getByText("Preview states", { exact: true }).click();
   await page.getByRole("button", { name: "Loading example" }).click();
   await expect(page.getByRole("status", { name: "Example loading state" })).toBeVisible();
   await page.getByRole("button", { name: "Error example" }).click();
-  await expect(page.getByRole("region", { name: "Your recommendations" }).getByRole("alert")).toContainText("We couldn’t load your recommendations");
+  await expect(page.getByRole("region", { name: "Recommendations" }).getByRole("alert")).toContainText("We couldn’t load your recommendations");
   await expectAccessible(page);
   await page.getByRole("button", { name: "Try again", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Verified catalogue products will appear here." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "No products yet." })).toBeVisible();
   await expectNoOverflow(page);
 });
 
@@ -130,13 +131,13 @@ test("catalogue and account destinations do not imply saved data", async ({ page
   await page.goto("/products?category=makeup");
   const categories = page.getByRole("navigation", { name: "Product categories" });
   await expect(categories.getByRole("link", { name: "Makeup" })).toHaveAttribute("aria-current", "page");
-  await expect(page.getByText("Our makeup catalogue", { exact: false })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "No products yet." })).toBeVisible();
   await expectAccessible(page);
-  await page.getByRole("link", { name: "Explore your preferences" }).click();
+  await page.getByRole("link", { name: "Start a consultation" }).click();
   await expect(page).toHaveURL(/interest=makeup/);
   await page.getByRole("link", { name: isMobile ? "Save" : "Save conversation", exact: true }).filter({ visible: true }).click();
   await expect(page).toHaveURL(/\/sign-in$/);
-  await expect(page.getByRole("main")).toContainText("coming soon");
+  await expect(page.getByRole("main")).toContainText("aren’t available yet");
   await expect(page.getByRole("textbox")).toHaveCount(0);
   if (isMobile) {
     await page.getByRole("button", { name: "Open menu" }).click();

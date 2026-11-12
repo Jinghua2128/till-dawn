@@ -59,6 +59,7 @@ Only record meaningful failures and repeatable lessons. Do not treat a guess as 
 ## OPS-M1-007 — Preview commit author permission (blocked)
 - CLI inspect of dpl_71ofeJW1s4M8RoTpTcySH3UTxZSv confirms target preview and Blocked: commit author lacks permission to create deployments for this project.
 - The commit uses verified GitHub no-reply author Jinghua2128. Vercel CLI account is separately authenticated. Required next step: normal Git account/team authorization. Do not fake authorship, strip Git metadata, or use another upload route to evade the access check.
+- After the user's completion report, `dpl_uJNmZJWycoZmFLRRgFqv3apQQXSi` for glass commit `253472d` was again Blocked with the same reason. The browser account page is signed out; the actual account connection remains unverified. All-deployment protection remains enabled.
 
 ## UI-GLASS-20261010 — Keep sticky input text readable (verified visually after fix)
 - Initial glass pass used the translucent modal fill for the mobile sticky composer. Full-page review showed recommendation text faintly showing through the control area.
@@ -67,3 +68,22 @@ Only record meaningful failures and repeatable lessons. Do not treat a guess as 
 ## UI-SCROLL-20261010 — Next.js smooth route-scroll warning (verified fixed)
 - Browser navigation warned that global smooth scrolling lacked `data-scroll-behavior="smooth"` on the HTML element. The installed Next 16 upgrade guide documents this opt-in for instant route transitions.
 - Added the attribute in `src/app/layout.tsx`; repeated landing → consultation navigation produced no new console warnings/errors.
+
+## UI-GLASS-20261011 — Linux mobile WebKit dialog stalls (investigating)
+- Expected: preferences and cancellation respond promptly on mobile WebKit, as in local macOS checks. Actual: CI `38030545170` passed 10 tests but two dialog flows timed out on both attempts.
+- Trace evidence: waiting for visible/enabled/stable buttons took 4.6–20.6 seconds; screenshots show sharp underlying text despite backdrop filters. Artifacts are in `/private/tmp/till-dawn-ci-38030545170`.
+- Hypothesis: repeated nested backdrop filters on dialog choices and buttons overload or stall Linux WebKit compositing. Removing redundant control/content filters while retaining the overlay's scene blur and glass fills. Verification pending; do not increase timeouts or force clicks to hide the problem.
+- First fix `87a864d` passed all 12 local tests but CI `38130018984` still failed the same two flows, progressing further before timing out. Nested-control filtering alone was not the complete cause. Second diagnostic change removes the document-height consultation backdrop filter and the unnecessary filter on the opaque sticky composer; navigation and modal overlay retain blur, and all glass fills/highlights remain. Linux verification pending.
+
+### 11 October handoff checkpoint
+- `c7d1761` removes full-page and opaque-composer backdrop filters. Local `npm run check` and all 12 browser tests PASS (7.9s); Linux CI `38130463104` is still running at handoff. Do not mark the Linux WebKit failure fixed yet.
+- Normal CLI reauthentication now reports `longmai2128` and reads the existing project successfully. Preview `dpl_67QbfKska7KfedC7dfDgNpACN4pT` still fails the commit-author gate, so the account refresh alone was insufficient. `/v2/user` omits Git-provider connection fields; null results from guessed top-level `githubLogin` / `githubId` fields were not evidence of a missing link.
+- Connected-app MCP user read now succeeds for `longmai2128`; both MCP team lists remain empty and project reads return scope 403. This narrows the remaining symptom to usable team access; it does not prove a service-side root cause.
+
+### 12 November verification
+- Run `38130463104` completed with 11 passes and one mobile WebKit preferences timeout. The prior Linux rendering fixes are not verified; inspect a fresh run/trace before another hypothesis-driven change.
+- Vercel CLI still reads the correct project, but Git connection fails because the private repository is inaccessible. GitHub App permission remains the concrete next authorization step; do not bypass commit-author checks.
+
+## OPS-SEC-20261112 — Vulnerable Next.js pin (patched locally)
+- `npm audit --omit=dev` confirmed critical Next.js advisories affecting 16.4.0; the production build also refused once with its security advisory.
+- Updated Next.js and eslint-config-next to 16.4.6 with the lockfile. Lint/typecheck/build and all 12 local browser tests pass; runtime audit reports zero advisories. Remote deployment verification remains pending.

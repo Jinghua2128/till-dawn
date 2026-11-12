@@ -8,8 +8,8 @@ import "./globals.css";
 import { MotionProvider } from "@/components/motion-provider";
 
 export const metadata: Metadata = {
-  title: { default: "Till Dawn — Beauty, considered.", template: "%s | Till Dawn" },
-  description: "Explore skincare and makeup through a conversation about what matters to you.",
+  title: { default: "Till Dawn — Skincare & makeup", template: "%s | Till Dawn" },
+  description: "Skincare and makeup product discovery.",
   robots: { index: false, follow: false }
 };
 

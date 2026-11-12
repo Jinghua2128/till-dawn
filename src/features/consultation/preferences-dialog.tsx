@@ -24,19 +24,19 @@ function PreferencesForm({ value, onSave, onCancel }: { value: PreviewPreference
     onSave({ ...draft, skincareType: skincare ? draft.skincareType : "", skinType: skincare ? draft.skinType : "", makeupType: makeup ? draft.makeupType : "", finish: makeup && !["Mascara", "Eye makeup"].includes(draft.makeupType) ? draft.finish : "" });
   }}>
     <FieldGroup>
-      <FieldSet><FieldLegend id="interest-label" variant="label">What would you like to explore?</FieldLegend>
+      <FieldSet><FieldLegend id="interest-label" variant="label">Category</FieldLegend>
         <ToggleGroup type="single" className="preference-choices" aria-labelledby="interest-label" value={draft.interest} onValueChange={(value) => { if (isPreviewInterest(value)) setField("interest", value); }}>
           {INTERESTS.map(({ value, label }) => <ToggleGroupItem key={value} value={value}>{label}</ToggleGroupItem>)}
         </ToggleGroup>
       </FieldSet>
-      {skincare ? <><ChoiceField id="skincare-type-label" label="Skincare products · optional" options={SKINCARE_TYPES} value={draft.skincareType} onChange={(value) => setField("skincareType", value)} /><ChoiceField id="skin-type-label" label="Your skin type, if known · optional" options={SKIN_TYPES} value={draft.skinType} onChange={(value) => setField("skinType", value)} /></> : null}
-      {makeup ? <><ChoiceField id="makeup-type-label" label="Makeup products · optional" options={MAKEUP_TYPES} value={draft.makeupType} onChange={(value) => setField("makeupType", value)} />{!['Mascara', 'Eye makeup'].includes(draft.makeupType) ? <ChoiceField id="finish-label" label="Preferred finish · optional" options={FINISHES} value={draft.finish} onChange={(value) => setField("finish", value)} /> : null}</> : null}
-      <Field><FieldLabel htmlFor="budget">Budget per product · optional</FieldLabel><div className="preference-budget"><span aria-hidden="true">S$</span><Input id="budget" aria-describedby="budget-description" inputMode="decimal" type="number" min="0" max="10000" step="0.01" placeholder="e.g. 40" value={draft.budget} onChange={(event) => setField("budget", event.target.value)} /></div><FieldDescription id="budget-description">Leave blank to explore. Delivery costs are separate.</FieldDescription></Field>
+      {skincare ? <><ChoiceField id="skincare-type-label" label="Skincare products" options={SKINCARE_TYPES} value={draft.skincareType} onChange={(value) => setField("skincareType", value)} /><ChoiceField id="skin-type-label" label="Skin type" options={SKIN_TYPES} value={draft.skinType} onChange={(value) => setField("skinType", value)} /></> : null}
+      {makeup ? <><ChoiceField id="makeup-type-label" label="Makeup products" options={MAKEUP_TYPES} value={draft.makeupType} onChange={(value) => setField("makeupType", value)} />{!['Mascara', 'Eye makeup'].includes(draft.makeupType) ? <ChoiceField id="finish-label" label="Finish" options={FINISHES} value={draft.finish} onChange={(value) => setField("finish", value)} /> : null}</> : null}
+      <Field><FieldLabel htmlFor="budget">Budget per product</FieldLabel><div className="preference-budget"><span aria-hidden="true">S$</span><Input id="budget" aria-describedby="budget-description" inputMode="decimal" type="number" min="0" max="10000" step="0.01" value={draft.budget} onChange={(event) => setField("budget", event.target.value)} /></div><FieldDescription id="budget-description">Excludes delivery.</FieldDescription></Field>
     </FieldGroup>
     <DialogFooter><Button type="button" variant="outline" onClick={onCancel}>Cancel</Button><Button type="submit">Apply preferences</Button></DialogFooter>
   </form>;
 }
 
 export function PreferencesDialog({ open, onOpenChange, value, onSave, onCloseAutoFocus }: { open: boolean; onOpenChange: (open: boolean) => void; value: PreviewPreferences; onSave: (value: PreviewPreferences) => void; onCloseAutoFocus: (event: Event) => void }) {
-  return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent onCloseAutoFocus={onCloseAutoFocus} className="max-h-[88dvh] overflow-y-auto sm:max-w-xl"><DialogHeader><DialogTitle>Your preferences</DialogTitle><DialogDescription>A few details to make this yours. Everything here is optional.</DialogDescription></DialogHeader><PreferencesForm key={open ? "open" : "closed"} value={value} onCancel={() => onOpenChange(false)} onSave={(preferences) => { onSave(preferences); onOpenChange(false); }} /></DialogContent></Dialog>;
+  return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent onCloseAutoFocus={onCloseAutoFocus} className="max-h-[88dvh] overflow-y-auto sm:max-w-xl"><DialogHeader><DialogTitle>Your preferences</DialogTitle><DialogDescription className="sr-only">All fields are optional.</DialogDescription></DialogHeader><PreferencesForm key={open ? "open" : "closed"} value={value} onCancel={() => onOpenChange(false)} onSave={(preferences) => { onSave(preferences); onOpenChange(false); }} /></DialogContent></Dialog>;
 }

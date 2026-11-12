@@ -10,7 +10,6 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
         <Link href="/affiliate-disclosure">Affiliate disclosure</Link>
         <Link href="/contact">Contact</Link>
       </nav>
-      {!compact ? <p>Purchases happen on retailer websites. Any affiliate links will be clearly disclosed. Commercial relationships won’t change organic recommendation rankings.</p> : null}
     </footer>
   );
 }

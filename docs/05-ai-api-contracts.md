@@ -2,6 +2,21 @@
 
 **Contract version:** v1. **Authority:** server-owned catalogue and explicit user preferences. Type declarations are in [domain contracts](03-domain-contracts.ts); runtime schemas, adapters, SQL functions and handlers will be implemented only after approval.
 
+## Model and training direction — 12 November 2026
+
+Preferred model: DeepSeek-V4.1-Flash-1017. The [official changelog](https://api-docs.deepseek.com/updates/) currently maps it to `deepseek-flash`; this alias follows updates, so it is not a permanent snapshot pin. Evaluate it on Till Dawn cases before connecting real customers. No model or backend is connected in the current UI preview.
+
+Start with prompting and retrieval, not training. Keep one Next.js server, one Postgres database and one model adapter. Verified products, prices and retailer URLs stay in the catalogue; SQL applies constraints and ranks products. DeepSeek extracts preferences and selects supported explanation codes. There is no need for a vector database or autonomous browsing for the initial structured catalogue.
+
+1. Curate 50–100 synthetic or explicitly consented, de-identified cases: budgets, exclusions, unknown ingredients, unavailable products, changed preferences and unsupported medical claims.
+2. Store each input, verified catalogue fixture and expected preferences/product IDs/refusal or clarification. Keep a held-out set separate from prompt examples; group related customer/product examples to avoid leakage.
+3. Measure constraint violations, invented facts, cross-account exposure, prompt injection, useful answers, latency and cost. Fix prompts, retrieval and validation first.
+4. Only if repeated behaviour errors remain, consider supervised fine-tuning with a provider that explicitly supports this model, or controlled open-weight infrastructure. Use rights-cleared input/target pairs, train/validation/test splits and a small adapter where supported. Compare against the unchanged baseline before rollout. Never train product prices into weights or automatically train on customer chats.
+
+Privacy is a hosting and application boundary, not something training guarantees. DeepSeek's [published privacy policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html) describes training uses for covered services and separately excludes downstream applications' processing rules; it does not establish the API-specific zero-retention/no-training assurance needed here. Obtain those terms before sending customer data. Any remote inference provider receives the submitted content. If data must never leave controlled infrastructure, use private inference with restricted egress; hosting feasibility/cost remains unevaluated.
+
+Keep keys server-side, isolate saved history by authenticated owner, minimize provider context, redact logs, implement deletion/retention, and validate read-only tool calls and outputs. Test abuse controls and authorization independently of model refusals. These controls reduce exposure and misuse; they cannot guarantee either is impossible. These are proposed backend requirements, not implemented protections.
+
 ## Provider-neutral boundary
 
 The `LlmProvider` adapter supports two bounded jobs: validated preference extraction and evidence-constrained explanation selection. One provider/model is selected for beta after an evaluation; a deterministic fake adapter supports tests. Switching providers must pass the same contract/evaluation suite. A model supporting JSON-schema-style output is preferred, but server validation is always required.

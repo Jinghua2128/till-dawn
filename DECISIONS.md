@@ -38,3 +38,15 @@ Record future substantive decisions with date, status, reason, consequences and 
 - User requested a liquid-glass effect. Apply it to existing navigation, controls, consultation surfaces and dialogs while preserving the cream/rose palette, original artwork, typography, visible copy and page flows.
 - Implement shared CSS blur, translucency, specular edges and restrained hover feedback. Keep opaque fallbacks, reduced-transparency support, reduced motion and keyboard focus; no new runtime dependency.
 - User reports the requested Vercel account step complete; verify staging normally while retaining all-deployment protection.
+
+## DEC-ACCOUNT-20261011 — Vercel account selection
+
+- User identified `LongMai2128` as the Vercel account connected to GitHub `Jinghua2128`. Normal CLI sign-in completed and now reports `longmai2128`; access to the existing Till Dawn project was verified.
+- Reuse the existing project and all-deployment protection. Do not create duplicate resources or change Git authorship to work around access checks. MCP project scope remains separately unverified.
+
+## DEC-SIMPLE-20261112 — Minimal UI and bounded AI
+
+- User requests direct labels, no slogans or redundant hints, aligned layout, restrained motion and Apple-like corners while preserving the current visual direction. Use shared CSS and existing Motion, with reduced-motion and rounded-corner fallbacks; no added UI dependency.
+- Prefer DeepSeek-V4.1-Flash-1017 for evaluation. Start with verified catalogue retrieval and server validation, not fine-tuning or an autonomous agent. API privacy terms must be confirmed before real customer data is sent. Training cannot guarantee no exposure or misuse.
+- User explicitly requested GitHub publication and automatic viewing of updates. Reuse the private `Jinghua2128/till-dawn` repository and existing protected Vercel project; keep all-deployment authentication.
+- Apply the Next.js 16.4.6 patch before release to resolve the verified runtime advisories affecting 16.4.0. No general dependency upgrade.

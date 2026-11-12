@@ -32,8 +32,8 @@ export function preferenceLabels(value: PreviewPreferences) {
   const hasMakeup = value.interest === "makeup" || value.interest === "both";
   return {
     interest: INTERESTS.find((interest) => interest.value === value.interest)?.label ?? "Just exploring",
-    products: [hasSkincare && value.skincareType, hasMakeup && value.makeupType].filter(Boolean).join(" · ") || "Choose a product type",
-    details: [hasSkincare && value.skinType && `${value.skinType} skin`, hasMakeup && value.finish && `${value.finish} finish`].filter(Boolean).join(" · ") || "Your preferences, your pace",
-    budget: value.budget ? `Up to S$${Number(value.budget).toLocaleString("en-SG", { maximumFractionDigits: 2 })}` : "No budget set",
+    products: [hasSkincare && value.skincareType, hasMakeup && value.makeupType].filter(Boolean).join(" · "),
+    details: [hasSkincare && value.skinType && `${value.skinType} skin`, hasMakeup && value.finish && `${value.finish} finish`].filter(Boolean).join(" · "),
+    budget: value.budget ? `Up to S$${Number(value.budget).toLocaleString("en-SG", { maximumFractionDigits: 2 })}` : "",
   };
 }
