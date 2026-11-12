@@ -1,6 +1,6 @@
 # Till Dawn
 
-**Milestone 1 · UI foundation · 9 October 2026**
+**UI preview · updated 12 November 2026**
 
 A Singapore-first beauty discovery platform built incrementally with Next.js App Router, React, TypeScript, Tailwind, shadcn/ui and Motion.
 
@@ -29,7 +29,7 @@ npm run test:e2e
 
 The browser suite starts the production build on port 3100. Its 12 cases cover desktop Chromium (1440×1000), mobile WebKit (390×664 viewport with iPhone 13 emulation), and 320px narrow-layout checks. It exercises navigation, conditional preferences, cancel/apply focus, message entry and deletion, refresh clearing, and loading/error recovery, with axe accessibility checks. Screenshots/traces on failure are saved in the OS temporary directory, outside the repository.
 
-GitHub Actions runs lint, type checking, production build and the browser suite for main pushes and pull requests. Current verification and hosting blockers are recorded in [HANDOFF.md](HANDOFF.md).
+GitHub Actions runs lint, type checking, production build and the browser suite for main pushes and pull requests. Current verification and hosting status are recorded in [HANDOFF.md](HANDOFF.md).
 
 Next.js is pinned to 16.4.6. Local checks and all 12 browser tests pass; `npm audit --omit=dev` reports zero runtime advisories. Development dependencies still have advisories; they were not broadly upgraded.
 
@@ -37,19 +37,13 @@ Developer loading/error examples are available at `/consultation?preview=1`; the
 
 ## Hosting
 
-Private repository: https://github.com/Jinghua2128/till-dawn
+[View Till Dawn](https://till-dawn-eight.vercel.app) · [Private GitHub repository](https://github.com/Jinghua2128/till-dawn) · [Vercel project](https://vercel.com/longmai2128s-projects/till-dawn)
 
-Vercel project: https://vercel.com/longmai2128s-projects/till-dawn
+Successful pushes to `main` automatically update the permanent Vercel URL. Sign in with Vercel to view it: all deployments remain protected, as requested. This is the UI preview; customer accounts, saved history and live AI are not connected.
 
-The workspace is linked to this project. It uses Next.js, Node 24, `npm ci`, and Singapore (`sin1`) for server functions. Vercel Authentication protects **all deployments**, including production URLs, as explicitly approved by the owner. The site also sends `noindex, nofollow`; this does not replace access protection.
+The project uses Next.js, Node 24 and `npm ci`. GitHub Actions runs lint/typecheck/build and all 12 browser tests with one CI worker for stable Linux WebKit execution. [Verified source CI](https://github.com/Jinghua2128/till-dawn/actions/runs/43233522101) passed without retries. Protected deployment content and signed-out redirects were checked on 12 November.
 
-[Protected UI review deployment](https://till-dawn-8t1bc52zx-longmai2128s-projects.vercel.app): Vercel promoted the first upload to production even though the CLI requested preview. This deployment is Ready, and authenticated checks of `/` and `/consultation` returned HTTP 200 with the expected app content. Signed-out requests redirect to Vercel sign-in. It is a UI prototype, not a launched beta.
-
-The latest preview `dpl_67QbfKska7KfedC7dfDgNpACN4pT` for `c7d1761` is **Blocked** because Vercel cannot authorize the Git commit author. Normal CLI sign-in now reports `longmai2128` and can read this project, but the author's GitHub connection still needs verification under [Authentication settings](https://vercel.com/account/authentication), following [Vercel's collaboration guidance](https://vercel.com/docs/deployments/troubleshoot-project-collaboration). The existing protected UI deployment above does not contain the glass update. Do not retry unchanged deployments or treat a returned URL as Ready.
-
-Environment files, Vercel credentials, generated builds and dependencies are excluded from Git. `.vercelignore` additionally excludes planning/handoff documents and tests from CLI uploads. Git integration is not connected; GitHub CI runs independently; automatic Vercel deployment awaits GitHub App access to this private repository.
-
-The requested agent setup installed Vercel CLI 63.1.0, the official user-scoped Vercel plugin, and the shared MCP endpoint with user-completed OAuth. CLI project access works. The global shared MCP has OAuth configured, and documentation search succeeds. A connected-app user read now recognizes `longmai2128`, but both available team lists are empty and project reads still return scope 403. MCP project access remains unresolved; the CLI continues to work.
+Environment files, credentials, builds and dependencies are excluded from Git. Root planning/handoff records and tests are also excluded from CLI deployment uploads. Current evidence and any remaining limitations are in [HANDOFF.md](HANDOFF.md). The [AI plan](docs/05-ai-api-contracts.md) explains the proposed DeepSeek integration and privacy requirements.
 
 ## Design implementation
 

@@ -5,7 +5,7 @@ Updated from implementation and deployment checks: 2026-11-12. Original workflow
 ## Identity and entry points
 
 - Type: Next.js App Router / React / TypeScript application; manifest pins Next.js 16.4.6 and React 19.3.0.
-- Branch: `main`; implementation baseline: `6d8012ec17dbdde1349eb9d5077a846288a09fdc`. Latest pushed implementation is `c7d1761` (liquid-glass rendering refinement); see HANDOFF.md for current local changes and the failed historical Linux CI result.
+- Branch: `main`; implementation baseline: `6d8012ec17dbdde1349eb9d5077a846288a09fdc`. Latest verified source/CI configuration is `8b60401`; see HANDOFF.md for the Ready protected deployment and passing Linux CI.
 - Open/run: `npm run dev` (documented Node 24 / npm setup); inspect README.md first.
 - Path inventory and the implementation map below describe inspected files. Executed check results and remaining integration limits are in HANDOFF.md.
 
@@ -56,8 +56,8 @@ Updated from implementation and deployment checks: 2026-11-12. Original workflow
 - `src/features/consultation/`: page-memory client, conditional preferences, display labels and honest recommendation states.
 - `src/app/products/page.tsx`: category navigation/empty catalogue. `sign-in/`, `account/history/`: unavailable-feature pages. `[info]/`: privacy/terms/disclosure/contact allowlist. `error.tsx`, `not-found.tsx`: recovery destinations.
 - `src/components/ui/`: official shadcn primitives with theme, target-size and InputGroup disabled-state adjustments. Shared header/footer/navigation under `src/components/`.
-- `tests/e2e/preview.spec.ts`, `playwright.config.ts`: production-server browser tests, Chromium desktop and mobile WebKit, accessibility/overflow checks. Generated traces/screenshots go to OS temp.
-- `.github/workflows/ci.yml`: pinned official Actions, Node 24, lint/typecheck/build and Playwright. `vercel.json`: Next.js, npm ci, sin1; `.vercelignore`: excludes planning/root handoff records, tests and environment files from CLI uploads (except `.env.example`).
+- `tests/e2e/preview.spec.ts`, `playwright.config.ts`: production-server browser tests, Chromium desktop and mobile WebKit, accessibility/overflow checks; one worker in CI. Generated traces/screenshots go to OS temp.
+- `.github/workflows/ci.yml`: pinned official Actions, Node 24, lint/typecheck/build and Playwright; failure traces are retained even when retries pass. `vercel.json`: Next.js, npm ci, sin1; `.vercelignore`: excludes planning/root handoff records, tests and environment files from CLI uploads (except `.env.example`).
 - `docs/concepts/`: approved reference images and asset provenance. `docs/01`–`10`: canonical requirements/design/architecture/backlog records; types are specifications, not a database implementation.
 - `.env.local`, `.vercel/`, `.next/`, `node_modules/` are generated/private/ignored. No relocation or cleanup authorized.
 - The original workflow setup performed an inventory only. Current executed checks and hosting/CI limitations are recorded in HANDOFF.md. Root state files are committed project records but excluded from deployment uploads.

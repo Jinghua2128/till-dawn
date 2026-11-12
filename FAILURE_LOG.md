@@ -91,3 +91,8 @@ Only record meaningful failures and repeatable lessons. Do not treat a guess as 
 ### 12 November modal investigation
 - `43160664727` passed only after one WebKit retry. `43161191184` failed both attempts; retained traces show individual clicks taking 1–7 seconds, and sharp background text visible through the dialog. Failure artifacts now upload even if retries eventually pass.
 - Targeted candidate: use a scrim instead of overlay blur, pause header blur behind an open modal, and increase modal opacity to 96%. All normal glass surfaces and motion remain. Local checks and 12 browser tests pass; Linux verification pending. No timeout/assertion/worker changes.
+
+### Final 12 November verification
+- The modal change improved legibility, but `43161921153` still needed a WebKit retry. Reduced CI contention by changing from two workers to Playwright's recommended one worker. `43233522101` passed all 12 tests without retries in 45.9s. Timings support runner contention; no product-specific rendering root cause is claimed. Assertions and timeouts are unchanged.
+- Normal GitHub App permission and project linking succeeded. Git push produced a Ready deployment for `8b60401`; prior commit-author blocker is resolved for this source.
+- Final live check found project protection null and signed-out HTTP 200. Restored the previously approved all-deployment authentication; project read confirms `all`, signed-out URLs return 302, authenticated consultation returns 200. The cause of the protection change is unknown; verify protection after hosting changes.
